@@ -1,0 +1,253 @@
+|centro evaluador don2 pac pac2 pac3 pac4 pac5 don don3 don4 don5 don6 resultado|
+
+Transcript clear; show:'EJEMPLO 3'; cr;
+			  show:'Contexto: En este ejemplo se hará uso de calculaCompatibilidadesGeneral para obtener todas las compatibilidades posibles de los pacientes con todos los donantes.';cr;cr.
+"============================================" 
+"CREAR EL CENTRO DE TRASPLANTES" 
+"============================================" 
+centro := CentroTransplantes conNombre: 'Hospital Iturraspe'.
+
+
+"============================================" 
+"REGISTRAR PERSONAS" 
+"============================================"
+
+"Pacientes"
+pac := Persona conDni: '44575945' nombre: 'Ronald' apellido: 'Tolkien'  fechaNacimiento: (Date newDay: 29 month: 12 year: 2003).
+pac2 := Persona conDni: '33956842' nombre: 'Lionel' apellido: 'Aguero'  fechaNacimiento: (Date newDay: 10 month: 1 year: 1990).
+pac3 := Persona conDni: '30105233' nombre: 'Fabian' apellido: 'Cantilo'  fechaNacimiento: (Date newDay: 1 month: 5 year: 1978).
+pac4 := Persona conDni: '23888232' nombre: 'Alan' apellido: 'Poe'  fechaNacimiento: (Date newDay: 1 month: 5 year: 1978).
+pac5 := Persona conDni: '39431211' nombre: 'Fito' apellido: 'Paez'  fechaNacimiento: (Date newDay: 1 month: 5 year: 1978).
+
+"Donantes"
+don := Persona conDni: '48234999' nombre: 'Galadriel' apellido: 'Tevez'  fechaNacimiento: (Date newDay: 6 month: 7 year: 2010).
+don2 := Persona conDni: '50565112' nombre: 'Barack' apellido: 'Obama'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2019).
+don3 := Persona conDni: '22949888' nombre: 'Donald' apellido: 'Trump'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2019).
+don4 := Persona conDni: '12345678' nombre: 'Michael' apellido: 'Jackson'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2019).
+don5 := Persona conDni: '23494532' nombre: 'Miguel' apellido: 'Jordan'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2019).
+don6 := Persona conDni: '45111242' nombre: 'Esteban' apellido: 'Rey'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2019).
+
+"agrego pacientes y donantes al centro"
+centro agregaPaciente: pac fechaIngreso: (Date newDay: 1 month:10  year:2025 ).
+centro agregaPaciente: pac2 fechaIngreso: (Date newDay: 5 month:4  year:2022 ).
+centro agregaPaciente: pac3 fechaIngreso: (Date newDay: 4 month:7  year:2020 ).
+centro agregaPaciente: pac4 fechaIngreso: (Date newDay: 20 month:9  year:2022 ).
+centro agregaPaciente: pac5 fechaIngreso: (Date newDay: 25 month:1  year:2024 ).
+
+centro agregaDonante: don.
+centro agregaDonante: don2.
+centro agregaDonante: don3.
+centro agregaDonante: don4.
+centro agregaDonante: don5.
+centro agregaDonante: don6.
+
+"asocio pacientes con donantes registrados"
+centro asociaPaciente: pac conDonante: don2.
+centro asociaPaciente: pac2 conDonante: don.
+centro asociaPaciente: pac4 conDonante: don3. 
+
+
+"============================================" 
+"CREAR Y REGISTRAR ESTUDIOS CLÍNICOS" 
+"============================================"  
+
+"Datos de estatura y talla: tamaño corporal"
+pac estatura: 1.70 ; peso: 70.
+pac2 estatura: 2.0 ; peso: 75.
+pac3 estatura: 1.69 ; peso: 66.
+pac4 estatura: 1.73 ; peso: 120.
+pac5 estatura: 1.72 ; peso: 70.
+don estatura: 1.68; peso: 70.
+don2 estatura: 1.67; peso: 97.
+don3 estatura: 1.71; peso: 72.
+don4 estatura: 1.63; peso: 68.
+don5 estatura: 1.64; peso: 71.
+don6 estatura: 1.67; peso: 65.
+
+"Estudio Analisis de Sangre"
+pac registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #B).
+pac2 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #AB).
+pac3 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #O).
+pac4 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #A).
+pac5 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #B).
+don registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #B).
+don2 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #B).
+don3 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #A).
+don4 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #AB).
+don5 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #O).
+don6 registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #O).
+
+"Estudio Crossmatch"
+pac registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don2.
+pac registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don.
+pac registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don3.
+pac registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don4.
+pac registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don5.
+pac registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don6.
+
+pac2 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don.
+pac2 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don4.
+pac2 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don2.
+pac2 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don3.
+pac2 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don5.
+pac2 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don6.
+
+pac3 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don3.
+pac3 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don6.
+pac3 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don2.
+pac3 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don.
+pac3 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don4.
+pac3 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don5.
+
+pac4 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don3.
+pac4 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don2.
+pac4 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don4.
+pac4 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don.
+pac4 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don6.
+pac4 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don5.
+
+pac5 registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don5.
+pac5 registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don2.
+pac5 registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don3.
+pac5 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don.
+pac5 registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don4.
+pac5 registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don6.
+
+"Estudio Serologico"
+pac registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+pac2 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+pac3 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+pac4 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+pac5 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+
+don registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+don2 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+don3 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+don4 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+don5 registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+don6 registraEstudio: (EstudioSerologicoCompleto conResultado: #noApto).
+
+"Estudio TipificacionHLA"
+pac registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A1)  b: #(B3 B2)  dR:#(DR5 DR5)).
+pac2 registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A3)  b: #(B6 B9)  dR:#(DR4 DR12)).
+pac3 registraEstudio: (EstudioTipificacionHLA  conA: #(A7 A11)  b: #(B12 B18)  dR:#(DR6 DR12)).
+pac4 registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A13)  b: #(B7 B10)  dR:#(DR4 DR17)).
+pac5 registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A3)  b: #(B7 B8)  dR:#(DR7 DR15)).
+
+don registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A3)  b: #(B7 B8)  dR:#(DR4 DR15)).
+don2 registraEstudio: (EstudioTipificacionHLA  conA: #(A3 A4)  b: #(B8 B6)  dR:#(DR7 DR8)).
+don3 registraEstudio: (EstudioTipificacionHLA  conA: #(A20 A13)  b: #(B6 B9)  dR:#(DR6 DR12)).
+don4 registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A7)  b: #(B6 B12)  dR:#(DR4 DR17)).
+don5 registraEstudio: (EstudioTipificacionHLA  conA: #(A3 A4)  b: #(B8 B2)  dR:#(DR4 DR13)).
+
+
+"Estudio AnticuerposPRA"
+pac registraEstudio: (EstudioAnticuerposPRA conA: #(A3 15) b:#(A4 80)  dR:#(B8 10) ).
+pac2 registraEstudio: (EstudioAnticuerposPRA conA: #(A2 30) b:#(DR4 80)  dR:#(DR7 10) ).
+pac3 registraEstudio: (EstudioAnticuerposPRA conA: #(A3 15) b:#(A4 80)  dR:#(B8 10) ).
+pac4 registraEstudio: (EstudioAnticuerposPRA conA: #(A20 40) b:#(B2 85)  dR:#(DR13 60) ).
+pac5 registraEstudio: (EstudioAnticuerposPRA conA: #(A2 30) b:#(A3 80)  dR:#(B8 35) ).
+
+"Estudio IMC"
+pac registraEstudio: (EstudioIMC paraPersona:pac).
+pac2 registraEstudio: (EstudioIMC paraPersona:pac2).
+pac3 registraEstudio: (EstudioIMC paraPersona:pac3).
+pac4 registraEstudio: (EstudioIMC paraPersona:pac4).
+pac5 registraEstudio: (EstudioIMC paraPersona:pac5).
+
+don registraEstudio: (EstudioIMC paraPersona:don).
+don2 registraEstudio: (EstudioIMC paraPersona:don2).
+don3 registraEstudio: (EstudioIMC paraPersona:don3).
+don4 registraEstudio: (EstudioIMC paraPersona:don4).
+don6 registraEstudio: (EstudioIMC paraPersona:don6).
+don5 registraEstudio: (EstudioIMC paraPersona:don5).
+
+"Estudio aptitud General"
+pac registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+pac2 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+pac3 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+pac4 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+pac5 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+don registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+don2 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+don3 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+don4 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+don5 registraEstudio: (EstudioAptitudGeneral conResultado: #apto).
+don6 registraEstudio: (EstudioAptitudGeneral conResultado: #noApto).
+
+
+"============================================" 
+"CREAR CRITERIOS Y CONFIGURAR EL EVALUADOR" 
+"============================================" 
+"evaluador"
+evaluador := EvaluadorCompatibilidad new.
+
+"Agregar criterios obligatorios (si fallan, no se puede hacer el trasplante)" 
+evaluador agregarCriterioObligatorio: (ABO new).
+evaluador agregarCriterioObligatorio: (Crossmatch  new).
+evaluador agregarCriterioObligatorio: (SerologiaActiva new).
+evaluador agregarCriterioObligatorio: (EstadoClinicoDelDonante new).
+
+"Agregar criterios deseables con sus ponderaciones (peso en %)" 
+evaluador agregarCriterioDeseable: (PRA new) ponderacion: 40.
+evaluador agregarCriterioDeseable: (TamCorporal new) ponderacion: 60. 
+
+"asignamos un minimo para la compatibilidad"
+ResultadoCompatibilidad minimoCompatibilidad: 40.
+Transcript show: 'Minimo de Compatibilidad: '; show:40 ; cr.
+
+"asignamos el evaluador al centro"
+centro evaluadorCompatibilidad: evaluador.
+
+
+"============================================" 
+"CÁLCULOS Y GUARDAR ARCHIVOS" 
+"============================================" 
+
+"Calcular todas las compatibilidades 
+entre todos los pacientes y todos los donantes"
+
+centro calculaCompatibilidadesGeneral. 
+Transcript cr; cr; show: 'Compatibilidades registradas calculadas.'; cr.
+
+(centro compatibilidades do:[:rc |
+							Transcript show:'paciente: ';
+										  show: rc paciente nombre;
+										  show: ' '; 
+										  show: rc paciente apellido; cr.
+							Transcript show:'donante: '; 
+										  show: rc donante nombre; 
+										  show: ' '; 
+										  show: rc donante apellido; cr.
+							Transcript show: 'porcentaje: '; 
+										  show: rc porcentajeCompatibilidad ; cr.
+							Transcript show:'compatible? ';
+										  show: rc compatible; cr.
+							Transcript show: 'estudios faltantes: ';
+										  show: rc estudiosFaltantes; cr.
+										
+							Transcript show: 'Resultados de los criterios 	obligatorios: '; cr;
+										show: 'ABO: ';
+										show: (ABO new evaluaCompatibilidad: rc paciente con: rc donante);cr;
+									   show: 'Crossmatch: ';
+										show: (Crossmatch new evaluaCompatibilidad: rc paciente con: rc donante);cr;
+										show: 'SerologiaActiva: ';
+										show: (SerologiaActiva new evaluaCompatibilidad: rc paciente con: rc donante);cr;
+										show: 'Estado Clinico Donante: ';
+										show: (EstadoClinicoDelDonante  new evaluaCompatibilidad: rc paciente con: rc donante);cr.
+							Transcript cr; show:'/////////'; cr;cr.
+							]).
+
+Transcript cr;cr; show: 'Compatibilidades generales calculadas.'; cr. 
+
+"guardar Registros"
+centro guardaRegistros: 'ejemplo3'. 
+Transcript show: 'Archivos .csv generados.'; cr.
+
+
+
+
+
+
+
+

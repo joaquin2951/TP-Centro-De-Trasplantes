@@ -1,0 +1,100 @@
+|centro evaluador don2 pac pac2 pac3 don cross sero hla arr1 arr2 pra tamCorporal criterioEdad|
+
+"centro"
+centro := CentroTransplantes conNombre: 'Hospital Iturraspe'.
+
+
+"creo personas"
+pac := Persona conDni: '44575945' nombre: 'joa' apellido: 'nil'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2000).
+pac2 := Persona conDni: '44575945' nombre: 'marcos' apellido: 'nil'  fechaNacimiento: (Date newDay: 10 month: 1 year: 2005).
+pac3 := Persona conDni: '44575945' nombre: 'lucas' apellido: 'nil'  fechaNacimiento: (Date newDay: 29 month: 5 year: 2010).
+
+don := Persona conDni: '44575945' nombre: 'ziro' apellido: 'nil'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2005).
+don2 := Persona conDni: '44000945' nombre: 'joaquin' apellido: 'nil'  fechaNacimiento: (Date newDay: 3 month: 10 year: 2005).
+
+pac peso:10.
+pac estatura:2.
+
+don peso:20.
+don estatura:1.
+
+"agrego pacientes y donantes al centro"
+centro agregaPaciente: pac fechaIngreso: (Date newDay: 1 month:10  year:2025 ).
+centro agregaPaciente: pac2 fechaIngreso: (Date newDay: 5 month:4  year:2022 ).
+centro agregaPaciente: pac3 fechaIngreso: (Date newDay: 1 month:1  year:2015 ).
+
+centro agregaDonante: don.
+
+"registro estudios"
+pac registraEstudio: (EstudioCrossMatch conResultado: #positivo) con: don.
+pac registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #B).
+don registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #B).
+
+pac registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+don registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+
+pac registraEstudio: (EstudioTipificacionHLA  conA: #(A1 A2)  b: #(B7 B44)  dR:#(DR1 DR4) ).
+don registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A3)  b: #(B7 B8)  dR:#(DR4 DR15)).
+
+pac registraEstudio: (EstudioAnticuerposPRA conA: #(A3 15) b:#(A4 80)  dR:#(B8 10) ).
+
+pac registraEstudio: (EstudioIMC paraPersona:pac).
+don registraEstudio: (EstudioIMC paraPersona: don).
+
+"compatibilidad crossmatch"
+
+"
+cross := Crossmatch new.
+cross evaluaCompatibilidad: pac con: don.
+
+sero := SerologiaActiva new.
+sero evaluaCompatibilidad: pac con: don. 
+
+hla := HLA new.
+hla evaluaCompatibilidad: pac con: don. 
+
+pra := PRA new.
+pra evaluaCompatibilidad: pac con: don.
+
+tamCorporal := TamCorporal new.
+tamCorporal evaluaCompatibilidad: pac con: don. 
+
+criterioEdad := Edad new.
+criterioEdad evaluaCompatibilidad: pac con: don. 
+"
+
+
+"evaluador"
+evaluador := EvaluadorCompatibilidad new.
+
+"agregar criterios"
+evaluador agregarCriterioObligatorio: (ABO new).
+evaluador agregarCriterioObligatorio: (SerologiaActiva new).
+
+evaluador agregarCriterioDeseable: (HLA new) ponderacion: 80.
+evaluador agregarCriterioDeseable: (Edad new) ponderacion: 10.
+
+"asignamos un minimo para la compatibilidad"
+ResultadoCompatibilidad minimoCompatibilidad: 0.
+centro evaluadorCompatibilidad: evaluador.
+
+
+"evalaur compatibilidades"
+evaluador compatibilidadPaciente: pac con: don. 
+
+"(ABO new) evaluaCompatibilidad: pac con: don."
+
+"asociar paciente con donante"
+centro asociaPaciente: pac conDonante: don.
+centro asociaPaciente: pac2 conDonante: don2. 
+
+centro compatibilidad: pac con: don .
+"centro calculaCompatibilidadesGeneral."
+
+centro guardaRegistros: 'REGISTROS_v3'.
+
+
+
+
+
+

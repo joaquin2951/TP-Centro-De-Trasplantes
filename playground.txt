@@ -1,0 +1,48 @@
+|pac don cross sero hla arr1 arr2 pra tamCorporal criterioEdad|
+
+"creo personas"
+pac := Persona conDni: nil nombre: 'joa' apellido: nil  fechaNacimiento: (Date newDay: 3 month: 10 year: 2000).
+don := Persona conDni: nil nombre: 'ziro' apellido: nil  fechaNacimiento: (Date newDay: 3 month: 10 year: 2005).
+
+pac peso:10.
+pac estatura:2.
+
+don peso:20.
+don estatura:1.
+
+
+
+"registro estudios"
+pac registraEstudio: (EstudioCrossMatch conResultado: #negativo) con: don.
+pac registraEstudio: (AnalisisDeSangre conGrupoSanguineo: #A).
+
+pac registraEstudio: (EstudioSerologicoCompleto conResultado: #noApto).
+don registraEstudio: (EstudioSerologicoCompleto conResultado: #apto).
+
+pac registraEstudio: (EstudioTipificacionHLA  conA: #(A1 A2)  b: #(B7 B44)  dR:#(DR1 DR4) ).
+don registraEstudio: (EstudioTipificacionHLA  conA: #(A2 A3)  b: #(B7 B8)  dR:#(DR4 DR15)).
+
+pac registraEstudio: (EstudioAnticuerposPRA conA: #(A3 15) b:#(A4 80)  dR:#(B8 10) ).
+
+pac registraEstudio: (EstudioIMC paraPersona:pac).
+don registraEstudio: (EstudioIMC paraPersona: don).
+
+"compatibilidad crossmatch"
+cross := Crossmatch new.
+cross evaluaCompatibilidad: pac con: don.
+
+sero := SerologiaActiva new.
+sero evaluaCompatibilidad: pac con: don. 
+
+hla := HLA new.
+hla evaluaCompatibilidad: pac con: don. 
+
+pra := PRA new.
+pra evaluaCompatibilidad: pac con: don.
+
+tamCorporal := TamCorporal new.
+tamCorporal evaluaCompatibilidad: pac con: don. 
+
+criterioEdad := Edad new.
+criterioEdad evaluaCompatibilidad: pac con: don. 
+

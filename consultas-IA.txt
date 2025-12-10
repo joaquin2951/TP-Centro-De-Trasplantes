@@ -1,0 +1,66 @@
+CONSULTA: FechaActual
+	No sabíamos cómo obtener la Fecha Actual con la clase Date para poder usarla luego en algunos métodos que la requerían,
+	como calcular la edad de una persona o saber cuántos meses lleva en lista de espera un paciente.
+	Entonces le preguntamos a la IA: 
+		"Estoy trabajando con la versión de Pharo 11, 
+		 necesito sacar le edad de una persona, tengo su fecha de nacimiento,
+		 puedo usar la fecha actual de mi pc? "
+	Y nos respondió:
+		"hoy := Date today.
+		 edad := hoy year - fechaNacimiento year." (fueron omitidas las otras palabras para que no quede tan largo el .txt,
+		 pero básicamente nos explica de la existencia del 'today', que era el dato que nos faltaba para poder calcular la
+		 edad y posteriormente (en otro método) el tiempo en lista de espera).
+
+
+CONSULTA: Generar Archivos CSV
+	Debiamos generar archivos .CSV como salida en el método guardarArchivo y no sabíamos cómo resolverlo.
+	Le preguntamos a la IA:
+		"Sigo trabajando en Pharo Version 11, necesito generar un archivo de texto con formato CSV como pide en la 			 siguiente imagen" (le adjuntamos screenshot del enunciado donde se pedía ese método para que tenga más contexto)
+	Y nos respondió:
+		"
+			"Defino una colección de pacientes, cada uno representado como un Dictionary."
+			| pacientes contenido archivoNombre |
+
+			pacientes := { 
+    					Dictionary newFrom: {'dni'->'12345678'. 'nombre'->'Juan'. 'apellido'->'Perez'. 										'mesesEnEspera'->6}.
+    					Dictionary newFrom: {'dni'->'87654321'. 'nombre'->'Ana'. 'apellido'->'Gomez'. 										'mesesEnEspera'->12}
+				}.
+
+			"Genero el contenido CSV utilizando un WriteStream sobre un String."
+			contenido := String streamContents: [ :stream |
+    			pacientes do: [:paciente |
+        			"Para cada paciente escribo los campos, separados por comas. La línea termina con un salto de línea (nl)."
+        			stream nextPutAll: (paciente at: 'dni'); nextPut: $,.
+        			stream nextPutAll: (paciente at: 'nombre'); nextPut: $,.
+        			stream nextPutAll: (paciente at: 'apellido'); nextPut: $,.
+        			stream nextPutAll: (paciente at: 'mesesEnEspera') asString; nl.
+    				].
+			].
+			"Asigno el nombre deseado al archivo CSV."
+			archivoNombre := 'miproyecto_pacientes.csv'.
+
+			"Abro (o creo) el archivo en modo escritura y guardo el contenido generado."
+			FileStream newFileNamed: archivoNombre do: [:file |
+    			file nextPutAll: contenido.
+			].
+	
+		
+			Explicación de cada parte
+			Definición de datos: Se crea una colección (aquí, un Array) de diccionarios, 
+					     donde cada diccionario representa un paciente con las claves y valores que se necesitan 
+					     (dni, nombre, apellido, meses en espera).
+
+			Generación del contenido CSV: Se utiliza el método String streamContents: que crea un flujo para escribir 
+						      el contenido como cadena de texto. Se itera sobre cada paciente y se agregan
+                                                      los campos separados por comas, finalizando cada registro con un salto de línea (nl).
+
+			Nombre de archivo:  Se asigna el nombre del archivo que tendrá el CSV que se va a generar.
+
+			Escritura del archivo: Se usa FileStream (que permite manipular archivos en Pharo) para crear y escribir el archivo con
+					       el contenido en formato CSV.  "
+
+		
+	Como puede verse, al no tener idea de cómo tenemos nosotros definidas las clases y demás, usó un diccionario para los pacientes y supuso que la información
+	estaba allí; pero lo que a nosotros nos sirvió fue poder entender los métodos y formas para escribir en un archivo de salida, así que ese código que nos
+	mandó, lo adaptamos a nuestras necesidades para que quede como nos pedía el enunciado y se adapte a todo nuestro código.
+
